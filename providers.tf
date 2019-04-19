@@ -4,6 +4,10 @@ provider "azurerm" {
   version = "~>1.25"
 }
 
+provider "random" {
+  version = "~>2.1"
+}
+
 terraform {
   required_version = ">= 0.11.13"
 }

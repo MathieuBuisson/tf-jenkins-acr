@@ -14,8 +14,8 @@ variable "location" {
 }
 
 variable "registry_sku" {
-  description = "SKU name of the container registry. Valid values are : 'Basic', 'Standard' and 'Premium'."
-  default     = "Basic"
+  description = "SKU name of the container registry. Valid values are : 'Classic', 'Basic', 'Standard' and 'Premium'."
+  default     = "Classic"
 }
 
 variable "admin_user_enabled" {
