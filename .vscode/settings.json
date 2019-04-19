@@ -1,0 +1,9 @@
+{
+    "files.insertFinalNewline": true,
+    "editor.renderIndentGuides": true,
+    "editor.formatOnPaste": true,
+    "json.format.enable": true,
+    "[terraform]": {
+        "editor.formatOnSave": true
+    }
+}
