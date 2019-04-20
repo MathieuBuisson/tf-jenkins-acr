@@ -1,38 +1,31 @@
+variable "vm_name" {
+  description = "Name of the virtual machine"
+  type        = "string"
+}
+
 variable "resource_group_name" {
-  description = "Name of the resource group where the resources will be deployed"
+  description = "Name of the resource group where the virtual machine belongs"
   type        = "string"
 }
 
 variable "location" {
-  description = "Azure region where resources will be located"
+  description = "Azure region where the virtual machine will be located"
   type        = "string"
 }
 
-variable "storage_account_name" {
-  description = "Name of the storage account"
-  type        = "string"
-  default     = ""
-}
-
-variable "storage_account_tier" {
-  description = "Tier to use for this storage account. Valid values are : 'Standard' and 'Premium'."
-  default     = "Standard"
-}
-
-variable "registry_name" {
-  description = "Name of the container registry."
-  type        = "string"
-  default     = ""
-}
-
-variable "jenkins_vm_dns_prefix" {
-  description = "Label for the DNS Name. Will be used to make up the FQDN of the Jenkins VM public IP."
+variable "nic_id" {
+  description = "ID of the network interface to attach to the virtual machine"
   type        = "string"
 }
 
 variable "vm_size" {
   description = "Size of the virtual machine"
-  default     = "Standard_DS1_v2"
+  type        = "string"
+}
+
+variable "ubuntu_version" {
+  description = "Version of the Ubuntu Server image used for the VM"
+  default     = "16.04-LTS"
 }
 
 variable "admin_username" {
@@ -45,10 +38,19 @@ variable "admin_password" {
   type        = "string"
 }
 
+variable "public_ip_fqdn" {
+  description = "Full DNS name associated with the VM's public IP address"
+  type        = "string"
+}
+
 variable "git_repository" {
   description = "URL to a public git repository that includes a Dockerfile"
   type        = "string"
-  default     = "https://github.com/azure-devops/spin-kub-demo.git"
+}
+
+variable "registry_login_server" {
+  description = "URL to specify to login to the container registry"
+  type        = "string"
 }
 
 variable "service_principal_id" {

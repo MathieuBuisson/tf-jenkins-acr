@@ -3,4 +3,4 @@ This **Terraform** module deploys networking-related resources :
   - Network security group
   - Virtual network
   - Subnet
-  - 
+  - Network interface

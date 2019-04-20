@@ -45,3 +45,19 @@ module "networking" {
   subnet_name         = "${local.resource_prefix}-subnet"
   nic_name            = "${local.resource_prefix}-nic"
 }
+
+module "jenkins" {
+  source                   = "./modules/jenkins"
+  vm_name                  = "${var.jenkins_vm_dns_prefix}"
+  resource_group_name      = "${azurerm_resource_group.rg.name}"
+  location                 = "${azurerm_resource_group.rg.location}"
+  nic_id                   = "${module.networking.nic_id}"
+  vm_size                  = "${var.vm_size}"
+  admin_username           = "${var.admin_username}"
+  admin_password           = "${var.admin_password}"
+  public_ip_fqdn           = "${module.networking.public_ip_fqdn}"
+  git_repository           = "${var.git_repository}"
+  registry_login_server    = "${module.acr.login_server}"
+  service_principal_id     = "${var.service_principal_id}"
+  service_principal_secret = "${var.service_principal_secret}"
+}
