@@ -33,3 +33,15 @@ module "acr" {
   location            = "${azurerm_resource_group.rg.location}"
   storage_account_id  = "${module.storage.storage_account_id}"
 }
+
+module "networking" {
+  source              = "./modules/networking"
+  public_ip_name      = "${local.resource_prefix}-publicip"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+  location            = "${azurerm_resource_group.rg.location}"
+  public_ip_dns_label = "${var.jenkins_vm_dns_prefix}"
+  nsg_name            = "${local.resource_prefix}-nsg"
+  vnet_name           = "${local.resource_prefix}-vnet"
+  subnet_name         = "${local.resource_prefix}-subnet"
+  nic_name            = "${local.resource_prefix}-nic"
+}

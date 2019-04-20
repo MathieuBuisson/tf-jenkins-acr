@@ -24,3 +24,8 @@ variable "registry_name" {
   type        = "string"
   default     = ""
 }
+
+variable "jenkins_vm_dns_prefix" {
+  description = "Label for the DNS Name. Will be used to make up the FQDN of the Jenkins VM public IP."
+  type        = "string"
+}

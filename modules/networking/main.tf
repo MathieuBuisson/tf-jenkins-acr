@@ -2,7 +2,7 @@ resource "azurerm_public_ip" "ip" {
   name                = "${var.public_ip_name}"
   resource_group_name = "${var.resource_group_name}"
   location            = "${var.location}"
-  allocation_method   = "${var.ip_allocation_method}"
+  allocation_method   = "${var.public_ip_allocation_method}"
   domain_name_label   = "${var.public_ip_dns_label}"
 }
 
@@ -50,9 +50,11 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                      = "${var.subnet_name}"
-  resource_group_name       = "${var.resource_group_name}"
-  virtual_network_name      = "${azurerm_virtual_network.vnet.name}"
+  name                 = "${var.subnet_name}"
+  resource_group_name  = "${var.resource_group_name}"
+  virtual_network_name = "${azurerm_virtual_network.vnet.name}"
+
+  # Taking the second /24 subnet from the first IP range of the virtual network
   address_prefix            = "${cidrsubnet(azurerm_virtual_network.vnet.address_space[0], 8, 1)}"
   network_security_group_id = "${azurerm_network_security_group.nsg.id}"
   depends_on                = ["azurerm_network_security_rule.ssh", "azurerm_network_security_rule.http"]
@@ -61,4 +63,17 @@ resource "azurerm_subnet" "subnet" {
 resource "azurerm_subnet_network_security_group_association" "nsglink" {
   subnet_id                 = "${azurerm_subnet.subnet.id}"
   network_security_group_id = "${azurerm_network_security_group.nsg.id}"
+}
+
+resource "azurerm_network_interface" "nic" {
+  name                = "${var.nic_name}"
+  resource_group_name = "${var.resource_group_name}"
+  location            = "${var.location}"
+
+  ip_configuration {
+    name                          = "${var.nic_name}-config1"
+    subnet_id                     = "${azurerm_subnet.subnet.id}"
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = "${azurerm_public_ip.ip.id}"
+  }
 }
